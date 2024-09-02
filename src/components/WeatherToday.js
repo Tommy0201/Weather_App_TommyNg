@@ -5,18 +5,20 @@ function Weather({data}) {
         <div className="weather-card">
             <div className="main">
                 <div className="mainInfo">
-                <div className='location'>
-                    <p>{data.city}</p>
-                </div>
-                <div className='temperature'>
-                    <h1 className='bold'>{Math.round(data.main.temp-273.15)}°C</h1>
-                </div>
-                <div className='condition'>
-                    <p>{data.weather[0].description}</p>
-                </div>
+                    <div className='location'>
+                        <p>{new Date(data.dt * 1000).toDateString()}</p>
+                        <p>{data.city}</p>
+
+                    </div>
+                    <div className='temperature'>
+                        <h1 className='bold'>{Math.round(data.main.temp-273.15)}°C</h1>
+                    </div>
+                    <div className='condition'>
+                        <p>{data.weather[0].description}</p>
+                    </div>
                 </div>
                 <div className='mainIcon'>
-                <img alt='weather' className='weatherIcon' src={`icons/${data.weather[0].icon}.png`}/>
+                    <img alt='weather' className='weatherIcon' src={`icons/${data.weather[0].icon}.png`}/>
                 </div>
             </div>
             <div className='description'>

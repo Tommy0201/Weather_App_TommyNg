@@ -4,32 +4,68 @@ import './Forecast.css';
 
 const Forecast = ({data}) => {
 
-    // Function to format the temperature from Kelvin to Celsius
-    const kelvinToCelsius = (temp) => Math.round(temp - 273.15);
-    console.log(data);
+    const getDateString = (timestamp) => {
+        const date = new Date(timestamp * 1000);
+        return date.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
+    };
 
+    const kelvinToCelsius = (temp) => Math.round(temp - 273.15);
+
+    const getCurrentDate = () => new Date().toISOString().split('T')[0];
+
+    const groupByDate = (list) => {
+        const groupedData = {};
+
+        list.forEach((forecast) => {
+            const date = getDateString(forecast.dt);
+
+            if (!groupedData[date]) {
+                groupedData[date] = {
+                    count: 0,
+                    tempSum: 0,
+                    weather: [],
+                    icon: forecast.weather[0].icon
+                };
+            }
+
+            groupedData[date].count++;
+            groupedData[date].tempSum += forecast.main.temp;
+            groupedData[date].weather.push(forecast.weather[0].description);
+        });
+
+        return Object.keys(groupedData).map((date) => ({
+            date,
+            averageTemp: kelvinToCelsius(groupedData[date].tempSum / groupedData[date].count),
+            description: groupedData[date].weather[0], // Taking the first description for simplicity
+            icon: groupedData[date].icon
+        }));
+    };
+
+    const filteredForecasts = groupByDate(data.list).filter(
+        (forecast) => forecast.date !== getCurrentDate()
+    );
 
     return (
         <div className="forecast">
         <h3>Forecast</h3>
         <div className="forecast-container">
-            {data.list.map((forecast, index) => (
+            {filteredForecasts.map((forecast, index) => (
                 <div key={index} className="forecast-card">
-                    
+
                     <div className="forecast-date">
-                        <p>{forecast.dt_txt}</p>
+                        <p>{forecast.date}</p>
                     </div>
                     <div className="forecast-temp">
-                        <h3>{kelvinToCelsius(forecast.main.temp)}°C</h3>
+                        <h3>{forecast.averageTemp}°C</h3>
                     </div>
                     <div className="forecast-condition">
-                        <p>{forecast.weather[0].description}</p>
+                        <p>{forecast.description}</p>
                     </div>
                     <div className="forecast-icon">
                         <img
                             alt='weather'
                             className='weatherIcon'
-                            src={`icons/${forecast.weather[0].icon}.png`}
+                            src={`icons/${forecast.icon}.png`}
                         />
                     </div>
                 </div>
