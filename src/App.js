@@ -3,7 +3,7 @@ import './App.css';
 import React, { useState } from 'react';
 import SearchBar from './components/SearchBar';
 import Weather from './components/WeatherToday';
-
+import Forecast from './components/Forecast';
 
 
 
@@ -41,6 +41,7 @@ const App = () => {
       <div className = "container">
         <SearchBar onSearchChange={handleSearchChange} />
         {current && <Weather data={current}/>}
+        {forecast && <Forecast data={forecast}/>}
       </div>
     </div>
   );
