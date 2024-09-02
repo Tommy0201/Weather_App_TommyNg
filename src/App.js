@@ -2,6 +2,7 @@ import './App.css';
 
 import React from 'react';
 import SearchBar from './components/SearchBar';
+import Weather from './components/WeatherToday';
 
 
 
@@ -12,8 +13,11 @@ const App = () => {
     console.log(searchData);
   };
   return (
-    <div className="search-bar">
-      <SearchBar onSearchChange={handleSearchChange} />
+    <div className="app">
+      <div className = "container">
+        <SearchBar onSearchChange={handleSearchChange} />
+        <Weather />
+      </div>
     </div>
   );
 }
