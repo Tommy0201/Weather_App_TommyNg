@@ -4,7 +4,7 @@
     color: #fff;
     font-size: x-large;
     max-width: 700px;
-    height: 400px;
+    height: 500px;
     margin: auto;
     position: relative;
     top: 100px;
@@ -15,7 +15,6 @@
 
 .main {
     width: 100%;
-    /* margin: 1rem auto; */
     display: flex;
     align-items: center;
     justify-content: space-evenly;

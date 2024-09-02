@@ -41,18 +41,32 @@ const SearchBar = ({ onSearchChange }) => {
         onSearchChange(searchData);
     }
 
+    // Custom styles
+    const customStyles = {
+      control: (provided, state) => ({
+          ...provided,
+          borderRadius: '5px',
+          border: '2px solid #ccc',
+          boxShadow: state.isFocused ? '0 0 0 2px #3699FF' : null,
+      }),
+      option: (provided, state) => ({
+          ...provided,
+          backgroundColor: state.isFocused ? '#3699FF' : null,
+          color: state.isFocused ? 'white' : null,
+      }),
+  }
+
   return (
-    <div className="App-header">
-        <div>
+      <div className='search-bar-container'>
         <AsyncPaginate
+            classNamePrefix="custom-select"
             placeholder="Enter city for weather"
             value={query}
             onChange={handleInputChange}
             loadOptions={loadOptions}
-            debounceTimeout={800}
-        />
-     </div>
-    </div>
+            styles={customStyles}
+            debounceTimeout={800}/>
+      </div>
 
   );
 }
